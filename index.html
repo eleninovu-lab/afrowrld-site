@@ -186,6 +186,9 @@
             pointer-events: none;
             transition: opacity 0.5s ease;
         }
+        #altDownloads {
+    display: block !important;
+}
     </style>
 </head>
 <body class="antialiased dark">
@@ -279,40 +282,24 @@
                         <a href="#download" id="heroDownloadBtn" class="download-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-white font-semibold text-lg">
                             <i class="fab fa-android text-xl"></i>
                             <span id="heroBtnText">Download for Android</span>
-                        </a>
-                        <div id="altDownloads" class="hidden">
-                    <p class="text-sm theme-text-muted mb-3">Or download manually:</p>
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <a href="/downloads/app-arm64-v8a-release.apk" class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
-                            <i class="fas fa-download text-purple-500"></i>
-                            ARM64 (arm64-v8a)
-                        </a>
-                        <a href="/downloads/app-armeabi-v7a-release.apk" class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
-                            <i class="fas fa-download text-purple-500"></i>
-                            ARM32 (armeabi-v7a)
-                        </a>
+                            </a>
                     </div>
-                </div>
-                        <!--<button onclick="scrollToSection('categories')" class="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-2xl theme-card theme-border theme-text hover:opacity-80 font-medium transition-all">
-                            <i class="fas fa-compass text-purple-500"></i>
-                            Explore Categories
-                        </button>
-                    </div>
-                    <div class="mt-8 flex items-center gap-6 justify-center lg:justify-start text-sm theme-text-muted">
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span>4GB RAM</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span>Android 8.0+</span>
-                        </div>
-                        <div class="flex items-center gap-2">
-                            <i class="fas fa-check-circle text-green-500"></i>
-                            <span>Private & Secure</span>
-                        </div><!--  -->
-                    </div>
-                </div>
+                    <div id="altDownloads" class="mt-6">
+    <p class="text-sm theme-text-muted mb-3 text-center">Or download manually:</p>
+    <div class="flex flex-wrap justify-center gap-3">
+        <a href="/downloads/app-arm64-v8a-release.apk" 
+           class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+            <i class="fas fa-download text-purple-500"></i>
+            Android 8.0 (Oreo) or higher<!--ARM64 (arm64-v8a)-->
+        </a>
+        <a href="/downloads/app-armeabi-v7a-release.apk" 
+           class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+            <i class="fas fa-download text-purple-500"></i>
+            Android 7.1 (Nougat) or lower<!--ARM32 (armeabi-v7a)-->
+        </a>
+    </div>
+</div>
+
 
                 <!-- Phone Mockup -->
                 <div class="relative flex justify-center animate-fade-in-up" style="animation-delay: 0.2s;">
