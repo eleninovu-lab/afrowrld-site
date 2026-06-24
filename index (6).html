@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Afrowrld</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        logo: ['Pacifico', 'cursive'],
+                    },
+                    colors: {
+                        afro: {
+                            dark: '#000000',
+                            darker: '#000000',
+                            card: '#111111',
+                            accent: '#7c3e86',
+                            accentHover: '#4a2050',
+                            muted: '#a1a1aa',
+                            border: '#27272a',
+                        }
+                    },
+                    animation: {
+                        'fade-in-up': 'fadeInUp 0.6s ease-out forwards',
+                        'fade-in': 'fadeIn 0.4s ease-out forwards',
+                        'slide-up': 'slideUp 0.5s ease-out forwards',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    },
+                    keyframes: {
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-200% 0' },
+                            '100%': { backgroundPosition: '200% 0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Dark mode */
+        body.dark {
+            background-color: #000000;
+            color: #ffffff;
+        }
+        body.dark .theme-bg { background-color: #000000; }
+        body.dark .theme-card { background-color: #111111; }
+        body.dark .theme-card-hover:hover { background-color: #1a1a1a; }
+        body.dark .theme-text { color: #ffffff; }
+        body.dark .theme-text-secondary { color: #a1a1aa; }
+        body.dark .theme-text-muted { color: #71717a; }
+        body.dark .theme-border { border-color: #27272a; }
+        body.dark .theme-nav { background-color: rgba(0,0,0,0.9); }
+        body.dark .theme-input { background-color: #111111; color: #ffffff; }
+        body.dark .theme-input::placeholder { color: #666666; }
+
+        .glass {
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .logo-header {
+            height: 30px;
+            width: 30px;
+        }
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(124, 62, 134, 0.2);
+        }
+        .phone-mockup {
+            box-shadow: 0 0 0 2px #27272a, 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        body:not(.dark) .phone-mockup {
+            box-shadow: 0 0 0 2px #e5e5e5, 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+        }
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .scroll-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .download-btn {
+            background: #7c3e86;
+            transition: all 0.3s ease;
+        }
+        .download-btn:hover {
+            background: #4a2050;
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px -10px rgba(225, 29, 72, 0.5);
+        }
+        .download-btn:active {
+            transform: scale(0.98);
+        }
+        .feature-icon {
+            background: rgba(124, 62, 134, 0.1);
+        }
+        body:not(.dark) .feature-icon {
+            background: rgba(124, 62, 134, 0.08);
+        }
+        .tab-active {
+            position: relative;
+        }
+        .tab-active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background: #7c3e86;
+            border-radius: 2px;
+        }
+        .category-card {
+            position: relative;
+            overflow: hidden;
+        }
+        .category-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 100%);
+        }
+        .category-card:hover::after {
+            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.6) 100%);
+        }
+        .age-badge {
+            background: rgba(0,0,0,0.7);
+            backdrop-filter: blur(4px);
+        }
+        body:not(.dark) .age-badge {
+            background: rgba(0,0,0,0.6);
+        }
+        @media (max-width: 640px) {
+            .phone-mockup { transform: scale(0.85); }
+        }
+        /* Adult content warning overlay */
+        .age-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .age-gate.hidden-gate {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+        #altDownloads {
+    display: block !important;
+}
+    </style>
+</head>
+<body class="antialiased dark">
+
+    <!-- Age Verification Gate
+    <div id="ageGate" class="age-gate theme-bg">
+        <div class="absolute inset-0 theme-bg"></div>
+        <div class="relative z-10 max-w-md mx-auto px-6 text-center">
+            <div class="w-20 h-20 rounded-2xl bg-purple-700 flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-exclamation-triangle text-white text-3xl"></i>
+            </div>
+            <h2 class="text-3xl font-bold theme-text mb-3">Age Verification Required</h2>
+            <p class="theme-text-secondary mb-2">This website contains adult content.</p>
+            <p class="theme-text-muted text-sm mb-8">You must be 18 years or older to enter. By clicking below, you confirm you are of legal age.</p>
+            <div class="space-y-3">
+                <button onclick="verifyAge(true)" class="w-full py-4 rounded-2xl bg-purple-700 hover:bg-purple-800 text-white font-bold text-lg transition-all">
+                    I am 18 or older — Enter Site
+                </button>
+                <button onclick="verifyAge(false)" class="w-full py-4 rounded-2xl theme-card theme-text font-medium transition-all hover:opacity-80">
+                    I am under 18 — Leave
+                </button>
+            </div>
+            <p class="mt-6 text-xs theme-text-muted">
+                <i class="fas fa-shield-alt mr-1"></i>
+                Your privacy is protected. No data is stored.
+            </p>
+        </div>
+    </div> -->
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-40 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <a href="#" class="flex items-center gap-2 group">
+                    <div class="logo-header">
+                        <img src="1000396378.png" alt="Afrowrld">
+                    </div>
+                    <!--<div class="w-9 h-9 rounded-xl bg-purple-700 flex items-center justify-center">
+                        <i class="fas fa-play text-white text-sm"></i>
+                    </div> -->
+                    <span class="font-logo text-2xl theme-text">Afrowrld</span>
+                    <span class="hidden sm:inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-700 text-white uppercase tracking-wider">18+</span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#categories" class="text-sm theme-text-secondary hover:text-purple-500 transition-colors">Categories</a>
+                    <a href="#features" class="text-sm theme-text-secondary hover:text-purple-500 transition-colors">Features</a>
+                    <a href="#preview" class="text-sm theme-text-secondary hover:text-purple-500 transition-colors">Preview</a>
+                    <a href="#download" class="text-sm theme-text-secondary hover:text-purple-500 transition-colors">Download</a>
+                </div>
+                <div class="flex items-center gap-3">
+                    <a href="#download" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-purple-700 hover:bg-purple-800 text-white text-sm font-medium transition-all">
+                        <i class="fab fa-android"></i>
+                        Get the App
+                    </a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden p-2 theme-text-secondary hover:theme-text">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass border-t theme-border theme-nav">
+            <div class="px-4 py-4 space-y-3">
+                <a href="#categories" class="block theme-text-secondary hover:theme-text py-2">Categories</a>
+                <a href="#features" class="block theme-text-secondary hover:theme-text py-2">Features</a>
+                <a href="#preview" class="block theme-text-secondary hover:theme-text py-2">Preview</a>
+                <a href="#download" class="block theme-text-secondary hover:theme-text py-2">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <!-- Text Content -->
+                <div class="text-center lg:text-left animate-fade-in-up">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full theme-card theme-border mb-6">
+                        <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+                        <span class="text-xs theme-text-muted">Unlock unlimited Adult Content</span>
+                        <span class="text-[10px] font-bold  bg-rose-600 text-white px-2 py-0.5 rounded">18+ ONLY</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight mb-6 theme-text">
+                        Adult Content<br>
+                        <span class="text-purple-500">Redefined</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl theme-text-secondary mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+                        Discover premium adult videos and pictures across multiple categories. Curated content, privacy-first and built for your pleasure.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk" download id="heroDownloadBtn" class="download-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-white font-semibold text-lg">
+                            <i class="fab fa-android text-xl"></i>
+                            <span id="heroBtnText">Download for Android</span>
+                            </a>
+                    </div>
+                    <div id="altDownloads" class="mt-6">
+    <p class="text-sm theme-text-muted mb-3 text-center">Or download manually:</p>
+    <div class="flex flex-wrap justify-center gap-3">
+        <a href="https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk" download 
+           class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+            <i class="fas fa-download text-purple-500"></i>
+            Android 8.0 (Oreo) or higher<!--ARM64 (arm64-v8a)-->
+        </a>
+        <a href="https://pub-xxxxxxxx.r2.dev/app-armeabi-v7a-release.apk" download 
+           class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+            <i class="fas fa-download text-purple-500"></i>
+            Android 7.1 (Nougat) or lower<!--ARM32 (armeabi-v7a)-->
+        </a>
+    </div>
+</div>
+
+
+                <!-- Phone Mockup -->
+                <div class="relative flex justify-center animate-fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="relative">
+                        <div class="phone-mockup w-[280px] sm:w-[320px] h-[580px] sm:h-[660px] theme-card rounded-[40px] overflow-hidden relative border-4 theme-border">
+                            <div class="absolute top-0 left-0 right-0 h-8 theme-bg z-20 flex items-center justify-between px-6">
+                                <span class="text-[10px] theme-text-muted">9:41</span>
+                                <div class="flex items-center gap-1">
+                                    <i class="fas fa-signal text-[8px] theme-text-muted"></i>
+                                    <i class="fas fa-wifi text-[8px] theme-text-muted"></i>
+                                    <i class="fas fa-battery-full text-[8px] theme-text-muted"></i>
+                                </div>
+                            </div>
+                            <div class="absolute top-2 left-1/2 -translate-x-1/2 w-28 h-6 bg-black rounded-full z-30"></div>
+                            <div class="h-full theme-bg pt-10 overflow-hidden">
+                                <div class="flex items-center justify-between px-4 py-3">
+                                    <span class="font-logo text-lg theme-text">Afrowrld</span>
+                                    <div class="flex items-center gap-3">
+                                        <i class="fas fa-bell theme-text-muted text-sm"></i>
+                                        <i class="fas fa-search theme-text-muted text-sm"></i>
+                                    </div>
+                                </div>
+                                <div class="flex px-4 pb-3 border-b theme-border">
+                                    <div class="flex-1 text-center pb-2 tab-active">
+                                        <span class="text-sm font-medium theme-text">For you</span>
+                                    </div>
+                                    <div class="flex-1 text-center pb-2">
+                                        <span class="text-sm theme-text-muted">Latest</span>
+                                    </div>
+                                </div>
+                                <div class="px-3 pt-3 space-y-3 overflow-hidden">
+                                    <div class="theme-card rounded-2xl overflow-hidden border theme-border">
+                                        <div class="flex items-center gap-2 p-3">
+                                            <div class="w-7 h-7 rounded-full bg-purple-700"></div>
+                                            <span class="text-xs font-semibold theme-text">AFRICAN HOT GIRLS</span>
+                                            
+                                            <i class="fas fa-ellipsis-v theme-text-muted text-xs ml-auto"></i>
+                                        </div>
+                                        <p class="text-xs theme-text-muted px-3 pb-2">Beautiful scenes from nature #views #nature</p>
+                                        <div class="relative h-36 bg-gray-800">
+                                            <img src="Screenshot_2026-06-24-20-58-52-30_965bbf4d18d205f782c6b8409c5773a4.jpg" alt="Content" class="w-full h-full object-cover opacity-80">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="w-12 h-12 rounded-full bg-black/60 flex items-center justify-center">
+                                                    <i class="fas fa-play text-white text-sm ml-1"></i>
+                                                </div>
+                                            </div>
+                                            <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold">HD</div>
+                                        </div>
+                                        <div class="flex items-center justify-between p-3">
+                                            <div class="flex items-center gap-1">
+                                                <i class="fas fa-heart text-rose-500 text-xs"></i>
+                                                <span class="text-xs theme-text-muted">414</spid=""an>
+                                            </div>
+                                            <div class="flex items-center gap-1">
+                                                <i class="fas fa-eye theme-text-muted text-xs"></i>
+                                                <span class="text-xs theme-text-muted">1251 Views</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="theme-card rounded-2xl overflow-hidden border theme-border">
+                                        <div class="flex items-center gap-2 p-3">
+                                            <div class="w-7 h-7 rounded-full bg-purple-700"></div>
+                                            <span class="text-xs font-semibold theme-text">AFRICAN HOT GIRLS</span>
+                                           
+                                            <i class="fas fa-ellipsis-v theme-text-muted text-xs ml-auto"></i>
+                                        </div>
+                                        <p class="text-xs theme-text-muted px-3 pb-2">Animation and rendering tests.</p>
+                                        <div class="relative h-36 bg-gray-800">
+                                            <img src="Screenshot_2026-06-24-21-01-01-36_965bbf4d18d205f782c6b8409c5773a4~2.jpg" alt="Content" class="w-full h-full object-cover opacity-80">
+                                            <div class="absolute inset-0 flex items-center justify-center">
+                                                <div class="w-12 h-12 rounded-full bg-black/60 flex items-center justify-center">
+                                                    <i class="fas fa-play text-white text-sm ml-1"></i>
+                                                </div>
+                                            </div>
+                                            <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold">4K</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute -top-4 -right-4 w-20 h-20 bg-purple-600/20 rounded-full blur-xl"></div>
+                        <div class="absolute -bottom-4 -left-4 w-16 h-16 bg-purple-600/20 rounded-full blur-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <i class="fas fa-chevron-down theme-text-muted text-xl"></i>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="py-20 lg:py-24 theme-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="scroll-reveal text-center">
+                    <div class="text-4xl sm:text-5xl font-bold text-purple-500 mb-2">50K+</div>
+                    <div class="theme-text-muted text-sm">Adult Videos</div>
+                </div>
+                <div class="scroll-reveal text-center" style="transition-delay: 0.1s;">
+                    <div class="text-4xl sm:text-5xl font-bold text-purple-500 mb-2">200K+</div>
+                    <div class="theme-text-muted text-sm">Active Users</div>
+                </div>
+                <div class="scroll-reveal text-center" style="transition-delay: 0.2s;">
+                    <div class="text-4xl sm:text-5xl font-bold text-purple-500 mb-2">5M+</div>
+                    <div class="theme-text-muted text-sm">Daily Views</div>
+                </div>
+                <div class="scroll-reveal text-center" style="transition-delay: 0.3s;">
+                    <div class="text-4xl sm:text-5xl font-bold text-purple-500 mb-2">12+</div>
+                    <div class="theme-text-muted text-sm">Categories</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section
+    <section id="categories" class="py-20 lg:py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-purple-600/10 text-purple-500 text-sm font-medium mb-4">Categories</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 theme-text">Explore Your Desires</h2>
+                <p class="theme-text-secondary text-lg max-w-2xl mx-auto">Browse through our curated collection of adult content categories. Something for every taste.</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
+                <!-- Category 1 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=500&fit=crop" alt="Amateur" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Amateur</h3>
+                            <p class="text-white/70 text-sm">2,341 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 2 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.05s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&h=500&fit=crop" alt="Ebony" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Ebony</h3>
+                            <p class="text-white/70 text-sm">1,892 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 3 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.1s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=500&fit=crop" alt="Solo" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Solo</h3>
+                            <p class="text-white/70 text-sm">3,104 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 4 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.15s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&h=500&fit=crop" alt="Lesbian" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Lesbian</h3>
+                            <p class="text-white/70 text-sm">987 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 5
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop" alt="Interracial" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Interracial</h3>
+                            <p class="text-white/70 text-sm">1,456 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 6
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.05s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=400&h=500&fit=crop" alt="Anal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Anal</h3>
+                            <p class="text-white/70 text-sm">2,103 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 7 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.1s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=400&h=500&fit=crop" alt="MILF" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">MILF</h3>
+                            <p class="text-white/70 text-sm">1,678 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 8 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.15s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop" alt="POV" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">POV</h3>
+                            <p class="text-white/70 text-sm">2,890 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 9 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop" alt="Teen" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Teen 18+</h3>
+                            <p class="text-white/70 text-sm">2,445 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 10 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.05s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop" alt="Threesome" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Threesome</h3>
+                            <p class="text-white/70 text-sm">876 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 11 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.1s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1526510747491-58f928ec870f?w=400&h=500&fit=crop" alt="Blowjob" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Blowjob</h3>
+                            <p class="text-white/70 text-sm">3,221 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+
+                <!-- Category 12 
+                <div class="scroll-reveal category-card rounded-2xl overflow-hidden cursor-pointer group" style="transition-delay: 0.15s;">
+                    <div class="aspect-[3/4] relative">
+                        <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=500&fit=crop" alt="Hardcore" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute bottom-0 left-0 right-0 p-4 z-10">
+                            <h3 class="text-white font-bold text-lg">Hardcore</h3>
+                            <p class="text-white/70 text-sm">4,567 videos</p>
+                        </div>
+                        <div class="absolute top-3 right-3 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">18+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--  -->
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 lg:py-32 theme-bg relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-purple-600/10 text-purple-500 text-sm font-medium mb-4">Features</span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 theme-text">Built for Pleasure</h2>
+                <p class="theme-text-secondary text-lg max-w-2xl mx-auto">A premium adult content experience with privacy, speed, and quality at its core.</p>
+            </div>
+
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <div class="scroll-reveal card-hover theme-card border theme-border rounded-3xl p-6 lg:p-8">
+                    <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-video text-purple-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 theme-text">HD & 4K Streaming</h3>
+                    <p class="theme-text-secondary leading-relaxed">Crystal clear video quality up to 4K. Adaptive bitrate for smooth playback on any connection.</p>
+                </div>
+
+                <div class="scroll-reveal card-hover theme-card border theme-border rounded-3xl p-6 lg:p-8" style="transition-delay: 0.1s;">
+                    <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-lock text-purple-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 theme-text">Private & Anonymous</h3>
+                    <p class="theme-text-secondary leading-relaxed">No account required. No tracking. Your viewing habits stay completely private.</p>
+                </div>
+
+                <div class="scroll-reveal card-hover theme-card border theme-border rounded-3xl p-6 lg:p-8" style="transition-delay: 0.2s;">
+                    <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-download text-purple-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 theme-text">Offline Downloads</h3>
+                    <p class="theme-text-secondary leading-relaxed">Save your favorite videos for offline viewing. Watch anywhere, anytime, no data needed.</p>
+                </div>
+
+                <div class="scroll-reveal card-hover theme-card border theme-border rounded-3xl p-6 lg:p-8">
+                    <div class="feature-icon w-14 h-14 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-purple-500 text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 theme-text">Lightning Fast</h3>
+                    <p class="theme-text-secondary leading-relaxed">Optimized for speed. Instant video loading and smooth scrolling even on slower networks.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Preview Section
+    <section id="preview" class="py-20 lg:py-32 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                <div class="scroll-reveal order-2 lg:order-1">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <div class="rounded-2xl overflow-hidden border theme-border theme-card relative category-card">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=400&fit=crop" alt="Preview" class="w-full h-40 object-cover">
+                                <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">HD</div>
+                                <div class="p-3 relative z-10 theme-card">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-purple-700"></div>
+                                        <span class="text-xs font-semibold theme-text">Ebony Beauty</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl overflow-hidden border theme-border theme-card relative category-card">
+                                <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=300&h=400&fit=crop" alt="Preview" class="w-full h-40 object-cover">
+                                <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">4K</div>
+                                <div class="p-3 relative z-10 theme-card">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-orange-600"></div>
+                                        <span class="text-xs font-semibold theme-text">Solo Session</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-8">
+                            <div class="rounded-2xl overflow-hidden border theme-border theme-card relative category-card">
+                                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=300&h=400&fit=crop" alt="Preview" class="w-full h-40 object-cover">
+                                <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">HD</div>
+                                <div class="p-3 relative z-10 theme-card">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-purple-600"></div>
+                                        <span class="text-xs font-semibold theme-text">Wild Nature</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="rounded-2xl overflow-hidden border theme-border theme-card relative category-card">
+                                <img src="https://images.unsplash.com/photo-1470071459604-3ff0802cfb7e?w=300&h=400&fit=crop" alt="Preview" class="w-full h-40 object-cover">
+                                <div class="absolute top-2 right-2 age-badge px-2 py-1 rounded text-[10px] text-white font-bold z-10">4K</div>
+                                <div class="p-3 relative z-10 theme-card">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-6 h-6 rounded-full bg-pink-600"></div>
+                                        <span class="text-xs font-semibold theme-text">Passion</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="scroll-reveal order-1 lg:order-2">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-purple-600/10 text-purple-500 text-sm font-medium mb-4">App Preview</span>
+                    <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 theme-text">Your Feed,<br>Your Rules</h2>
+                    <p class="theme-text-secondary text-lg mb-8 leading-relaxed">
+                        Swipe through curated content tailored to your preferences. From amateur to professional, find exactly what turns you on.
+                    </p>
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center">
+                                <i class="fas fa-check text-purple-500 text-xs"></i>
+                            </div>
+                            <span class="theme-text-secondary">Personalized "For You" feed</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center">
+                                <i class="fas fa-check text-purple-500 text-xs"></i>
+                            </div>
+                            <span class="theme-text-secondary">Latest uploads from creators</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-full bg-purple-600/20 flex items-center justify-center">
+                                <i class="fas fa-check text-purple-500 text-xs"></i>
+                            </div>
+                            <span class="theme-text-secondary">Seamless video player with controls</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section><!--  -->
+
+    <!-- Download Section
+    <section id="download" class="py-20 lg:py-32 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="scroll-reveal text-center">
+                <span class="inline-block px-4 py-1.5 rounded-full bg-green-500/10 text-green-500 text-sm font-medium mb-4">
+                    <i class="fab fa-android mr-1"></i> Android Only
+                </span>
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 theme-text">Ready to Dive In?</h2>
+                <p class="theme-text-secondary text-lg mb-4 max-w-2xl mx-auto">
+                    Download Afrowrld now and unlock unlimited adult content. We automatically detect your device and serve the right APK.
+                </p>
+
+                <div id="deviceInfo" class="hidden mb-8 p-4 rounded-2xl theme-card border theme-border max-w-md mx-auto">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-purple-600/20 flex items-center justify-center">
+                            <i class="fas fa-microchip text-purple-500"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-sm font-medium theme-text">Detected Architecture</div>
+                            <div id="archDisplay" class="text-xs theme-text-muted">Analyzing...</div>
+                        </div>
+                        <div id="compatBadge" class="ml-auto px-3 py-1 rounded-full text-xs font-medium"></div>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4 mb-10">
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full theme-card border theme-border">
+                        <i class="fab fa-android text-green-500"></i>
+                        <span class="text-sm theme-text-secondary">Android 8.0+</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full theme-card border theme-border">
+                        <i class="fas fa-memory text-purple-500"></i>
+                        <span class="text-sm theme-text-secondary">4GB RAM</span>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 rounded-full theme-card border theme-border">
+                        <i class="fas fa-microchip text-purple-500"></i>
+                        <span class="text-sm theme-text-secondary">ARM64 or ARMv7</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+                    <a id="primaryDownloadBtn" href="#" class="download-btn inline-flex items-center justify-center gap-3 px-10 py-5 rounded-2xl text-white font-bold text-lg">
+                        <i class="fab fa-android text-2xl"></i>
+                        <div class="text-left">
+                            <div id="downloadBtnTitle" class="text-sm opacity-80">Download</div>
+                            <div id="downloadBtnText" class="text-lg">Afrowrld APK</div>
+                        </div>
+                    </a>
+                </div>
+
+                <div id="altDownloads" class="hidden">
+                    <p class="text-sm theme-text-muted mb-3">Or download manually:</p>
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <a href="https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk" download class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+                            <i class="fas fa-download text-purple-500"></i>
+                            ARM64 (arm64-v8a)
+                        </a>
+                        <a href="https://pub-xxxxxxxx.r2.dev/app-armeabi-v7a-release.apk" download class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+                            <i class="fas fa-download text-purple-500"></i>
+                            ARM32 (armeabi-v7a)
+                        </a>
+                    </div>
+                </div>
+
+                <div id="notAndroid" class="hidden mt-6 p-4 rounded-2xl bg-yellow-500/10 border border-yellow-500/20 max-w-md mx-auto">
+                    <div class="flex items-center gap-3">
+                        <i class="fas fa-exclamation-triangle text-yellow-500 text-xl"></i>
+                        <div class="text-left">
+                            <div class="text-sm font-medium text-yellow-600 dark:text-yellow-200">Android Only</div>
+                            <div class="text-xs text-yellow-600/70 dark:text-yellow-200/70">Afrowrld is currently only available for Android devices.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--  -->
+
+    <!-- Footer -->
+    <footer class="border-t theme-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-2">
+                    <div class="logo-header">
+                        <img src="1000396378.png" alt="Afrowrld">
+                    </div>
+                    <span class="font-logo text-xl theme-text">Afrowrld</span>
+                </div>
+                <div class="flex items-center gap-6 text-sm theme-text-muted">
+                    <a href="#" class="hover:text-purple-500 transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-purple-500 transition-colors">Terms</a>
+                    <a href="#" class="hover:text-purple-500 transition-colors">DMCA</a>
+                    <a href="#" class="hover:text-purple-500 transition-colors">Contact</a>
+                </div>
+                <div class="text-sm theme-text-muted">
+                    &copy; 2026 Afrowrld. 18+ Only.
+                </div>
+            </div>
+            <div class="mt-6 text-center text-xs theme-text-muted max-w-2xl mx-auto">
+                All models depicted on this website were 18 years of age or older at the time of depiction. 
+                This website contains sexually explicit material. By entering, you affirm that you are at least 18 years of age 
+                or the age of majority in the jurisdiction you are accessing the website from.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // ============================================
+        // AGE VERIFICATION GATE
+        // ============================================
+
+        function verifyAge(isAdult) {
+            if (isAdult) {
+                const gate = document.getElementById('ageGate');
+                gate.classList.add('hidden-gate');
+                localStorage.setItem('afrowrld-age-verified', 'true');
+                setTimeout(() => {
+                    gate.style.display = 'none';
+                }, 500);
+            } else {
+                window.location.href = 'https://www.google.com';
+            }
+        }
+
+        function checkAgeVerification() {
+            if (localStorage.getItem('afrowrld-age-verified') === 'true') {
+                const gate = document.getElementById('ageGate');
+                gate.style.display = 'none';
+            }
+        }
+
+        // ============================================
+        // DEVICE ARCHITECTURE DETECTION
+        // ============================================
+
+        const ArchitectureDetector = {
+            APK_PATHS: {
+                arm64: 'https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk',
+                arm32: 'https://pub-xxxxxxxx.r2.dev/app-armeabi-v7a-release.apk',
+                fallback: 'https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk'
+            },
+
+            async detect() {
+                let result = {
+                    platform: 'unknown',
+                    architecture: 'unknown',
+                    bitness: 'unknown',
+                    isAndroid: false,
+                    isCompatible: false,
+                    apkUrl: this.APK_PATHS.fallback,
+                    method: 'fallback'
+                };
+
+                try {
+                    if (navigator.userAgentData) {
+                        const platform = navigator.userAgentData.platform;
+                        const mobile = navigator.userAgentData.mobile;
+                        result.platform = platform;
+                        result.isAndroid = (platform === 'Android');
+
+                        const hints = await navigator.userAgentData.getHighEntropyValues([
+                            'architecture', 'bitness', 'model', 'platformVersion'
+                        ]);
+
+                        result.architecture = hints.architecture || 'unknown';
+                        result.bitness = hints.bitness || 'unknown';
+                        result.method = 'client-hints';
+
+                        if (result.isAndroid) {
+                            if (result.architecture === 'arm' && result.bitness === '64') {
+                                result.apkUrl = this.APK_PATHS.arm64;
+                                result.isCompatible = true;
+                            } else if (result.architecture === 'arm' && result.bitness === '32') {
+                                result.apkUrl = this.APK_PATHS.arm32;
+                                result.isCompatible = true;
+                            } else if (result.architecture === 'arm') {
+                                result.apkUrl = this.APK_PATHS.arm64;
+                                result.isCompatible = true;
+                            }
+                        }
+                    }
+                } catch (e) {
+                    console.log('Client Hints detection failed:', e);
+                }
+
+                if (result.method === 'fallback') {
+                    const ua = navigator.userAgent.toLowerCase();
+                    result.isAndroid = /android/.test(ua);
+                    result.platform = result.isAndroid ? 'Android' : 'Other';
+
+                    if (result.isAndroid) {
+                        if (/arm64|aarch64|armv8/.test(ua)) {
+                            result.architecture = 'arm';
+                            result.bitness = '64';
+                            result.apkUrl = this.APK_PATHS.arm64;
+                            result.isCompatible = true;
+                            result.method = 'ua-string-arm64';
+                        } else if (/armv7|armeabi-v7a/.test(ua)) {
+                            result.architecture = 'arm';
+                            result.bitness = '32';
+                            result.apkUrl = this.APK_PATHS.arm32;
+                            result.isCompatible = true;
+                            result.method = 'ua-string-armv7';
+                        } else {
+                            result.architecture = 'arm';
+                            result.bitness = '64 (assumed)';
+                            result.apkUrl = this.APK_PATHS.arm64;
+                            result.isCompatible = true;
+                            result.method = 'ua-string-default';
+                        }
+                    }
+                }
+
+                if (result.method === 'fallback') {
+                    const platform = navigator.platform?.toLowerCase() || '';
+                    if (platform.includes('linux armv8') || platform.includes('linux aarch64')) {
+                        result.architecture = 'arm';
+                        result.bitness = '64';
+                        result.apkUrl = this.APK_PATHS.arm64;
+                        result.isCompatible = true;
+                        result.method = 'navigator-platform';
+                    }
+                }
+
+                return result;
+            },
+
+            getArchName(result) {
+                if (result.architecture === 'arm' && result.bitness === '64') {
+                    return 'ARM64 (arm64-v8a)';
+                } else if (result.architecture === 'arm' && result.bitness === '32') {
+                    return 'ARM32 (armeabi-v7a)';
+                } else if (result.architecture === 'x86') {
+                    return 'x86 / Intel';
+                }
+                return 'Unknown';
+            }
+        };
+
+        // ============================================
+        // UI INITIALIZATION
+        // ============================================
+
+        async function initDownloadSection() {
+            const detection = await ArchitectureDetector.detect();
+
+            const deviceInfo = document.getElementById('deviceInfo');
+            const archDisplay = document.getElementById('archDisplay');
+            const compatBadge = document.getElementById('compatBadge');
+            const primaryBtn = document.getElementById('primaryDownloadBtn');
+            const btnTitle = document.getElementById('downloadBtnTitle');
+            const btnText = document.getElementById('downloadBtnText');
+            const altDownloads = document.getElementById('altDownloads');
+            const notAndroid = document.getElementById('notAndroid');
+            const heroBtn = document.getElementById('heroDownloadBtn');
+            const heroBtnText = document.getElementById('heroBtnText');
+
+            if (deviceInfo) deviceInfo.classList.remove('hidden');
+            if (archDisplay) archDisplay.textContent = ArchitectureDetector.getArchName(detection);
+
+            if (detection.isAndroid) {
+                if (detection.isCompatible) {
+                    if (compatBadge) {
+                        compatBadge.textContent = 'Compatible';
+                        compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-500';
+                    }
+                    if (primaryBtn) primaryBtn.href = detection.apkUrl;
+                    if (btnTitle) btnTitle.textContent = 'Download for';
+                    if (btnText) btnText.textContent = detection.bitness === '32' ? 'ARM32 Device' : 'ARM64 Device';
+                    if (heroBtn) {
+                        heroBtn.href = detection.apkUrl;
+                        if (heroBtnText) heroBtnText.textContent = detection.bitness === '32' ? 'Download ARM32' : 'Download ARM64';
+                    }
+                    if (altDownloads) altDownloads.classList.remove('hidden');
+                } else {
+                    if (compatBadge) {
+                        compatBadge.textContent = 'Check Manually';
+                        compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-500';
+                    }
+                    if (primaryBtn) primaryBtn.href = ArchitectureDetector.APK_PATHS.arm64;
+                    if (btnTitle) btnTitle.textContent = 'Download';
+                    if (btnText) btnText.textContent = 'Afrowrld APK';
+                    if (altDownloads) altDownloads.classList.remove('hidden');
+                }
+            } else {
+                if (compatBadge) {
+                    compatBadge.textContent = 'Not Android';
+                    compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-500';
+                }
+                if (primaryBtn) {
+                    primaryBtn.classList.add('opacity-50', 'cursor-not-allowed');
+                    primaryBtn.removeAttribute('href');
+                    primaryBtn.onclick = (e) => {
+                        e.preventDefault();
+                        if (notAndroid) {
+                            notAndroid.classList.remove('hidden');
+                            notAndroid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    };
+                }
+                if (notAndroid) notAndroid.classList.remove('hidden');
+                if (altDownloads) altDownloads.classList.remove('hidden');
+            }
+
+            console.log('Architecture Detection Result:', detection);
+        }function initScrollEffects() {
+            const navbar = document.getElementById('navbar');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', () => {
+                const currentScroll = window.pageYOffset;
+                if (currentScroll > 50) {
+                    navbar.classList.add('glass', 'border-b', 'theme-border');
+                } else {
+                    navbar.classList.remove('glass', 'border-b', 'theme-border');
+                }
+                lastScroll = currentScroll;
+            });
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        document.getElementById('mobileMenuBtn')?.addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // ============================================
+        // INIT
+        // ============================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAgeVerification();
+            initDownloadSection();
+            initScrollEffects();
+        });
+    </script>
+</body>
+</html>
