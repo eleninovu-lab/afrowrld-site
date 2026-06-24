@@ -279,20 +279,20 @@
                         Discover premium adult videos and pictures across multiple categories. Curated content, privacy-first and built for your pleasure.
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                        <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk" download id="heroDownloadBtn" class="download-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-white font-semibold text-lg">
-                            <i class="fab fa-android text-xl"></i>
-                            <span id="heroBtnText">Download for Android</span>
-                            </a>
+                        <a href="javascript:void(0)" id="heroDownloadBtn" class="download-btn inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl text-white font-semibold text-lg">
+    <i class="fab fa-android text-xl"></i>
+    <span id="heroBtnText">Download for Android</span>
+</a>
                     </div>
                     <div id="altDownloads" class="mt-6">
     <p class="text-sm theme-text-muted mb-3 text-center">Or download manually:</p>
     <div class="flex flex-wrap justify-center gap-3">
-        <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk" download 
+        <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk" 
            class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
             <i class="fas fa-download text-purple-500"></i>
             Android 8.0 (Oreo) or higher<!--ARM64 (arm64-v8a)-->
         </a>
-        <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-32bit.apk" download 
+        <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-32bit.apk" 
            class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
             <i class="fas fa-download text-purple-500"></i>
             Android 7.1 (Nougat) or lower<!--ARM32 (armeabi-v7a)-->
@@ -754,11 +754,11 @@
                 <div id="altDownloads" class="hidden">
                     <p class="text-sm theme-text-muted mb-3">Or download manually:</p>
                     <div class="flex flex-wrap justify-center gap-3">
-                        <a href="https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk" download class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+                        <a href="/downloads/app-arm64-v8a-release.apk" class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
                             <i class="fas fa-download text-purple-500"></i>
                             ARM64 (arm64-v8a)
                         </a>
-                        <a href="https://pub-xxxxxxxx.r2.dev/app-armeabi-v7a-release.apk" download class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
+                        <a href="/downloads/app-armeabi-v7a-release.apk" class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
                             <i class="fas fa-download text-purple-500"></i>
                             ARM32 (armeabi-v7a)
                         </a>
@@ -838,9 +838,9 @@
 
         const ArchitectureDetector = {
             APK_PATHS: {
-                arm64: 'https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk',
-                arm32: 'https://pub-xxxxxxxx.r2.dev/app-armeabi-v7a-release.apk',
-                fallback: 'https://pub-xxxxxxxx.r2.dev/app-arm64-v8a-release.apk'
+                arm64: 'https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk',
+                arm32: 'https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-32bit.apk',
+                fallback: 'https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk'
             },
 
             async detect() {
@@ -945,68 +945,36 @@
         // ============================================
 
         async function initDownloadSection() {
-            const detection = await ArchitectureDetector.detect();
+    const detection = await ArchitectureDetector.detect();
+    const heroBtn = document.getElementById('heroDownloadBtn');
+    const heroBtnText = document.getElementById('heroBtnText');
 
-            const deviceInfo = document.getElementById('deviceInfo');
-            const archDisplay = document.getElementById('archDisplay');
-            const compatBadge = document.getElementById('compatBadge');
-            const primaryBtn = document.getElementById('primaryDownloadBtn');
-            const btnTitle = document.getElementById('downloadBtnTitle');
-            const btnText = document.getElementById('downloadBtnText');
-            const altDownloads = document.getElementById('altDownloads');
-            const notAndroid = document.getElementById('notAndroid');
-            const heroBtn = document.getElementById('heroDownloadBtn');
-            const heroBtnText = document.getElementById('heroBtnText');
+    if (detection.isAndroid && detection.isCompatible) {
+        // Dynamic: link to the detected architecture APK
+        if (heroBtn) {
+            heroBtn.href = detection.apkUrl;
+            heroBtn.setAttribute('download', '');
+        }
+        if (heroBtnText) {
+            heroBtnText.textContent = detection.bitness === '32' 
+                ? 'Download for ARM32' 
+                : 'Download for ARM64';
+        }
+    } else {
+        // Fallback: scroll to manual download options
+        if (heroBtn) {
+            heroBtn.href = '#altDownloads';
+            heroBtn.removeAttribute('download');
+        }
+        if (heroBtnText) {
+            heroBtnText.textContent = 'View Download Options';
+        }
+    }
 
-            if (deviceInfo) deviceInfo.classList.remove('hidden');
-            if (archDisplay) archDisplay.textContent = ArchitectureDetector.getArchName(detection);
+    console.log('Architecture Detection Result:', detection);
+}
 
-            if (detection.isAndroid) {
-                if (detection.isCompatible) {
-                    if (compatBadge) {
-                        compatBadge.textContent = 'Compatible';
-                        compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-500';
-                    }
-                    if (primaryBtn) primaryBtn.href = detection.apkUrl;
-                    if (btnTitle) btnTitle.textContent = 'Download for';
-                    if (btnText) btnText.textContent = detection.bitness === '32' ? 'ARM32 Device' : 'ARM64 Device';
-                    if (heroBtn) {
-                        heroBtn.href = detection.apkUrl;
-                        if (heroBtnText) heroBtnText.textContent = detection.bitness === '32' ? 'Download ARM32' : 'Download ARM64';
-                    }
-                    if (altDownloads) altDownloads.classList.remove('hidden');
-                } else {
-                    if (compatBadge) {
-                        compatBadge.textContent = 'Check Manually';
-                        compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-yellow-500/20 text-yellow-500';
-                    }
-                    if (primaryBtn) primaryBtn.href = ArchitectureDetector.APK_PATHS.arm64;
-                    if (btnTitle) btnTitle.textContent = 'Download';
-                    if (btnText) btnText.textContent = 'Afrowrld APK';
-                    if (altDownloads) altDownloads.classList.remove('hidden');
-                }
-            } else {
-                if (compatBadge) {
-                    compatBadge.textContent = 'Not Android';
-                    compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-red-500/20 text-red-500';
-                }
-                if (primaryBtn) {
-                    primaryBtn.classList.add('opacity-50', 'cursor-not-allowed');
-                    primaryBtn.removeAttribute('href');
-                    primaryBtn.onclick = (e) => {
-                        e.preventDefault();
-                        if (notAndroid) {
-                            notAndroid.classList.remove('hidden');
-                            notAndroid.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
-                    };
-                }
-                if (notAndroid) notAndroid.classList.remove('hidden');
-                if (altDownloads) altDownloads.classList.remove('hidden');
-            }
-
-            console.log('Architecture Detection Result:', detection);
-        }function initScrollEffects() {
+        function initScrollEffects() {
             const navbar = document.getElementById('navbar');
             let lastScroll = 0;
 
