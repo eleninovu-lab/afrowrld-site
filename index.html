@@ -284,18 +284,18 @@
     <span id="heroBtnText">Download for Android</span>
 </a>
                     </div>
-                    <div id="altDownloads" class="mt-6">
+                    <div class="alt-downloads hidden mt-6">
     <p class="text-sm theme-text-muted mb-3 text-center">Or download manually:</p>
     <div class="flex flex-wrap justify-center gap-3">
         <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-64bit.apk" 
            class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
             <i class="fas fa-download text-purple-500"></i>
-            Android 8.0 (Oreo) or higher<!--ARM64 (arm64-v8a)-->
+            Android 8.0 (Oreo) or higher
         </a>
         <a href="https://pub-7c2b3279f0ed480ca6969e6ed18c0f11.r2.dev/afrowrld-32bit.apk" 
            class="px-5 py-2.5 rounded-xl theme-card border theme-border theme-text hover:opacity-80 text-sm transition-all flex items-center gap-2">
             <i class="fas fa-download text-purple-500"></i>
-            Android 7.1 (Nougat) or lower<!--ARM32 (armeabi-v7a)-->
+            Android 7.1 (Nougat) or lower
         </a>
     </div>
 </div>
@@ -946,11 +946,24 @@
 
         async function initDownloadSection() {
     const detection = await ArchitectureDetector.detect();
+    
+    // Hero Section Buttons
     const heroBtn = document.getElementById('heroDownloadBtn');
     const heroBtnText = document.getElementById('heroBtnText');
+    
+    // Bottom Download Section UI Elements
+    const primaryBtn = document.getElementById('primaryDownloadBtn');
+    const primaryBtnText = document.getElementById('downloadBtnText');
+    const deviceInfo = document.getElementById('deviceInfo');
+    const archDisplay = document.getElementById('archDisplay');
+    const compatBadge = document.getElementById('compatBadge');
+    const notAndroid = document.getElementById('notAndroid');
+    
+    // Select all manual alternative downloads
+    const altDownloadsElements = document.querySelectorAll('#altDownloads, .alt-downloads');
 
     if (detection.isAndroid && detection.isCompatible) {
-        // Dynamic: link to the detected architecture APK
+        // --- 1. Set direct autodetected links to the buttons ---
         if (heroBtn) {
             heroBtn.href = detection.apkUrl;
             heroBtn.setAttribute('download', '');
@@ -958,17 +971,42 @@
         if (heroBtnText) {
             heroBtnText.textContent = detection.bitness === '32' 
                 ? 'Download for ARM32' 
-                : 'Download for ARM64';
+                : 'Download for Android';
         }
+        
+        if (primaryBtn) {
+            primaryBtn.href = detection.apkUrl;
+            primaryBtn.setAttribute('download', '');
+        }
+        if (primaryBtnText) {
+            primaryBtnText.textContent = `Afrowrld APK (${detection.bitness}-bit)`;
+        }
+
+        // --- 2. Show the "Detected Architecture" UI Block ---
+        if (deviceInfo) deviceInfo.classList.remove('hidden');
+        if (archDisplay) archDisplay.textContent = ArchitectureDetector.getArchName(detection);
+        if (compatBadge) {
+            compatBadge.textContent = 'Compatible';
+            compatBadge.className = 'ml-auto px-3 py-1 rounded-full text-xs font-medium bg-green-500/20 text-green-500';
+        }
+        
     } else {
-        // Fallback: scroll to manual download options
+        // --- 1. Non-Android or Unknown: Point to manual downloads ---
         if (heroBtn) {
-            heroBtn.href = '#altDownloads';
+            heroBtn.href = '#download'; // Scroll to the download section
             heroBtn.removeAttribute('download');
         }
-        if (heroBtnText) {
-            heroBtnText.textContent = 'View Download Options';
+        if (heroBtnText) heroBtnText.textContent = 'View Download Options';
+        
+        // Hide the big primary button since we don't know which APK they need
+        if (primaryBtn) primaryBtn.style.display = 'none';
+
+        // --- 2. Show warnings & manual options ---
+        if (!detection.isAndroid && notAndroid) {
+            notAndroid.classList.remove('hidden');
         }
+        
+        altDownloadsElements.forEach(el => el.classList.remove('hidden'));
     }
 
     console.log('Architecture Detection Result:', detection);
